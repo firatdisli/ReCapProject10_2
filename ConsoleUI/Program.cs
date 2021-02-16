@@ -13,34 +13,83 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
+            //CarList();
 
+            // Colorlist();
+          //  BrandCRUDDeneme();
+            // Brandlist();
+
+           //
+            CarDetailsList();
+
+            //CarManager carManager = new CarManager(new EfCarDal());
+
+
+            //  CRUDDeneme(carManager); //PRimarykey özelliğinden dolayı dikkat edilmedilidir
+            // CarList();
+            Console.ReadKey();
+        }
+
+        private static void BrandCRUDDeneme()
+        {
+            Brandlist();
+            BrandManager brandManager = new BrandManager(new EfBrandDal());
+            brandManager.Add(new Brand() { BrandId = 10, BrandName = "Suziki" });
+            brandManager.Update(new Brand() { BrandId = 10, BrandName = "Yu-Ma-Tu" });
+            Brandlist();
+            brandManager.Delete(new Brand() { BrandId = 10, BrandName = "Yu-Ma-Tu" });
+            Brandlist();
+        }
+
+        private static void Brandlist()
+        {
+            BrandManager brandManager = new BrandManager(new EfBrandDal());
+            foreach (var brand in brandManager.GetAll().Data)
+            {
+                Console.WriteLine("{0} {1} ", brand.BrandId, brand.BrandName);
+            }
+        }
+
+        private static void CRUDDeneme(CarManager carManager)
+        {
+            carManager.Add(new Car() { Id = 21, BrandId = 3, CarName = "Mustang GTX", ColorId = 2, ModelYear = 2014, DailyPrice = 300, Description = "Ultra Lüx Araba" });
+
+            Console.WriteLine(" eklendikten sonra");
+            CarList();
+
+            Console.WriteLine(" Updateden sonra sonra");
+            carManager.Update(new Car() { Id = 21, BrandId = 3, CarName = "Mustang GTX", ColorId = 2, ModelYear = 2014, DailyPrice = 200, Description = "Orta Lüx Araba" });
+            Console.WriteLine(" Silindikten Sonra");
+            carManager.Delete(new Car() { Id = 21, BrandId = 3, CarName = "Mustang GTX", ColorId = 2, ModelYear = 2014, DailyPrice = 200, Description = "Orta Lüx Araba" });
+        }
+
+        private static void CarDetailsList()
+        {
             CarManager carMamager = new CarManager(new EfCarDal());
 
-            foreach(var car in carMamager.GetAll())
+            foreach (var car in carMamager.GetCarDetails().Data)
             {
-                Console.WriteLine(car.Id+" "+car.ModelYear+" "+car.DailyPrice+" "+car.Description);
+                Console.WriteLine("{0} {1} {2} {3}", car.CarId, car.BrandName, car.ColorName, car.DailyPrice);
             }
+        }
 
+        private static void Colorlist()
+        {
+            BrandManager brandManager = new BrandManager(new EfBrandDal());
+            foreach (var brand in brandManager.GetAll().Data)
+            {
+                Console.WriteLine(brand.BrandId + " " + brand.BrandName);
+            }
+        }
 
-            Car car1 = new Car() {Id=10,CarName="F", BrandId=3,ColorId=2,DailyPrice=10,ModelYear=2012,Description="Eklenemeyen"};
-            Car car2 = new Car() { Id = 11, CarName = "Ford Fiesta", BrandId = 3, ColorId = 2, DailyPrice = 0, ModelYear = 2012, Description = "Eklenemeyen" };
-            Car car3 = new Car() { Id = 12, CarName = "Ford Fiesta", BrandId = 3, ColorId = 2, DailyPrice = 100, ModelYear = 2012, Description = "Aile Arabası" };
+        private static void CarList()
+        {
+            CarManager carMamager = new CarManager(new EfCarDal());
 
-            //Bir Önceki çalıştırmada eklenen değerler primarykey özelliğinden dolayı, comment yapılmalı
-           // carMamager.Delete(car3);
-            carMamager.Add(car1);
-            carMamager.Add(car2);
-           // carMamager.Add(car3);
-            //Delete metodu car nennesi istediğinden şimdilik tüm özelliklerini göndermek gerekli
-            //carMamager.Add(new Car() {Id=3,BrandId=2,ColorId=3,ModelYear=2017,DailyPrice=250,Description="Lüx Araba",CarName="Ford Mondeo" });
-            carMamager.Update(new Car() { Id = 4, BrandId = 3, ColorId = 2, ModelYear = 2014, DailyPrice = 250, Description = "Lüx Araba", CarName = "Ford Mondeo" });
-
-            Console.WriteLine("---------ekleme güncelleme ve silmeden sonra arabalar------");
-            foreach (var car in carMamager.GetAll())
+            foreach (var car in carMamager.GetAll().Data)
             {
                 Console.WriteLine(car.Id + " " + car.ModelYear + " " + car.DailyPrice + " " + car.Description);
             }
-            Console.ReadKey();
         }
     }
 }

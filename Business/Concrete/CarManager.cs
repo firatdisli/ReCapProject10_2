@@ -1,13 +1,16 @@
 ﻿using Business.Abstract;
+using Business.Constans;
+using Core.Utilities.Result;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Business.Concrete
 {
-   public class CarManager : ICarServices
+   public class CarManager : ICarService
     {
         ICarDal _carDal;
 
@@ -16,26 +19,45 @@ namespace Business.Concrete
             _carDal = carDal;
         }
 
-        public void Add(Car car)
+        public IResult Add(Car car)
         {
+            if (car.CarName.Length < 3)
+                return new ErrorResult(Messages.CarNameInvalid);
+
             _carDal.Add(car);
+            return new SuccessResult(Messages.CarAdded);
         }
 
-        public void Delete(Car car)
+        public IResult Delete(Car car)
         {
             _carDal.Delete(car);
+            return new SuccessResult(Messages.CarDeleted);
         }
 
-        public List<Car> GetAll()
+        public IDataResult<Car> Get(int carId)
         {
-            return _carDal.GetAll();
+            return new SuccessDataResult<Car>(_carDal.Get(c=>c.Id==carId));
         }
 
-        
+        public IDataResult<List<Car>> GetAll()
+        {
+            if(DateTime.Now.Hour==22)
+            {
+                return new ErrorDataResult<List<Car>>(Messages.MaintenanceTime);
+            }
 
-        public void Update(Car car)
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(),Messages.CarsListed);
+        }
+
+        public IDataResult<List<CarDetailDto>> GetCarDetails()
+        {
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails());
+        }
+
+        public IResult Update(Car car)
         {
             _carDal.Update(car);
+            return new SuccessResult(Messages.CarUpdated);
         }
 
       
