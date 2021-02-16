@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Business.Constans
+﻿namespace Business.Constans
 {
     public static class Messages
     {
@@ -22,5 +18,8 @@ namespace Business.Constans
         public static string CarUpdated = "Araba Güncellendi";
         public static string BrandUpdated = "Model Güncellendi";
         public static string ColorUpdated = "Renk Güncellendi";
+        public static string Added = "Ekleme Yapıldı";
+        public static string Deleted = "Silme Yapıldı";
+        public static string Updated = "Güncelleme Yapıldı";
     }
 }

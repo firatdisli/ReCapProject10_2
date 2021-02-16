@@ -6,11 +6,10 @@ using Entities.Concrete;
 using Entities.DTOs;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Business.Concrete
 {
-   public class CarManager : ICarService
+    public class CarManager : ICarService
     {
         ICarDal _carDal;
 
@@ -36,17 +35,17 @@ namespace Business.Concrete
 
         public IDataResult<Car> Get(int carId)
         {
-            return new SuccessDataResult<Car>(_carDal.Get(c=>c.Id==carId));
+            return new SuccessDataResult<Car>(_carDal.Get(c => c.Id == carId));
         }
 
         public IDataResult<List<Car>> GetAll()
         {
-            if(DateTime.Now.Hour==22)
+            if (DateTime.Now.Hour == 18)
             {
                 return new ErrorDataResult<List<Car>>(Messages.MaintenanceTime);
             }
 
-            return new SuccessDataResult<List<Car>>(_carDal.GetAll(),Messages.CarsListed);
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(), Messages.CarsListed);
         }
 
         public IDataResult<List<CarDetailDto>> GetCarDetails()
@@ -60,6 +59,6 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CarUpdated);
         }
 
-      
+
     }
 }

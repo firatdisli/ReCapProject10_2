@@ -1,12 +1,10 @@
 ﻿using Core.Utilities.Result;
 using Entities.Concrete;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Business.Abstract
 {
-  public  interface IBrandService
+    public interface IBrandService
     {
         IDataResult<List<Brand>> GetAll();
         IDataResult<Brand> Get(int brandId);

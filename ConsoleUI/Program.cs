@@ -1,10 +1,7 @@
-﻿using System;
-using Business.Abstract;
-using DataAccess.Abstract;
-using Entities.Concrete;
-using Business.Concrete;
-
+﻿using Business.Concrete;
 using DataAccess.Concrete.EntityFramework;
+using Entities.Concrete;
+using System;
 using System.Collections.Generic;
 
 namespace ConsoleUI
@@ -15,19 +12,41 @@ namespace ConsoleUI
         {
             //CarList();
 
-            // Colorlist();
-          //  BrandCRUDDeneme();
-            // Brandlist();
+            //Colorlist();
+            BrandCRUDDeneme();
+            //Brandlist();
 
-           //
-            CarDetailsList();
+            //CarDetailsList();
 
             //CarManager carManager = new CarManager(new EfCarDal());
+            //UserAdd();
+
+            //CustomerAdd();
+
 
 
             //  CRUDDeneme(carManager); //PRimarykey özelliğinden dolayı dikkat edilmedilidir
             // CarList();
             Console.ReadKey();
+        }
+
+        private static void CustomerAdd()
+        {
+            CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
+            List<Customer> customers = new List<Customer>()
+            {new Customer(){UserId=1,CompanyName="Kodlama.io"},
+            new Customer(){UserId=2,CompanyName="Yazılım Bilimi"}
+            };
+            customerManager.Add(customers[0]);
+            customerManager.Add(customers[1]);
+        }
+
+        private static void UserAdd()
+        {
+            UserManager userManager = new UserManager(new EfUserDal());
+
+            userManager.Add(new User() { Id = 1, FirstName = "Firat", LastName = "Dişli", Email = "sss_frt@hotmail.com", Password = "firat" });
+            userManager.Add(new User() { Id = 2, FirstName = "Nedim", LastName = "Bilgin", Email = "ndmblgn@hotmail.com", Password = "nedim" });
         }
 
         private static void BrandCRUDDeneme()

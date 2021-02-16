@@ -3,9 +3,7 @@ using Business.Constans;
 using Core.Utilities.Result;
 using DataAccess.Abstract;
 using Entities.Concrete;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Business.Concrete
 {
@@ -32,7 +30,7 @@ namespace Business.Concrete
 
         public IDataResult<Brand> Get(int brandId)
         {
-            return new SuccessDataResult<Brand>(_branddal.Get(b=>b.BrandId==brandId));
+            return new SuccessDataResult<Brand>(_branddal.Get(b => b.BrandId == brandId));
         }
 
         public IDataResult<List<Brand>> GetAll()
