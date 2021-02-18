@@ -10,18 +10,21 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            //CarList();
+            // CarList();
 
             //Colorlist();
-            BrandCRUDDeneme();
+            //BrandCRUDDeneme();
             //Brandlist();
 
             //CarDetailsList();
 
             //CarManager carManager = new CarManager(new EfCarDal());
-            //UserAdd();
+            // UserAdd();
 
             //CustomerAdd();
+            RentalAdd();
+
+            //RentalDetailList();
 
 
 
@@ -30,23 +33,29 @@ namespace ConsoleUI
             Console.ReadKey();
         }
 
+        private static void RentalAdd()
+        {
+            RentalManager rentalManager = new RentalManager(new EfRentalDal());
+            Rental rental = new Rental() { Id = 5, CarId = 3, CustomerId = 21, RentDate = DateTime.Now};
+            var result =rentalManager.Add(rental);
+            Console.WriteLine(result.Message);
+        }
+
         private static void CustomerAdd()
         {
             CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
-            List<Customer> customers = new List<Customer>()
-            {new Customer(){UserId=1,CompanyName="Kodlama.io"},
-            new Customer(){UserId=2,CompanyName="Yazılım Bilimi"}
-            };
-            customerManager.Add(customers[0]);
-            customerManager.Add(customers[1]);
+            Customer customer = new Customer() { CustomerId = 4, CompanyName = "Twitter", UserId = 23 };
+            customerManager.Add(customer);
         }
+
+        
+    
 
         private static void UserAdd()
         {
             UserManager userManager = new UserManager(new EfUserDal());
-
-            userManager.Add(new User() { Id = 1, FirstName = "Firat", LastName = "Dişli", Email = "sss_frt@hotmail.com", Password = "firat" });
-            userManager.Add(new User() { Id = 2, FirstName = "Nedim", LastName = "Bilgin", Email = "ndmblgn@hotmail.com", Password = "nedim" });
+            User user = new User() { Id = 23, Email = "bbbb@hotmail.com", FirstName = "ayşe", LastName = "gül", Password = "12345" };
+            userManager.Add(user);
         }
 
         private static void BrandCRUDDeneme()

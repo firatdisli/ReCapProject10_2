@@ -21,5 +21,6 @@
         public static string Added = "Ekleme Yapıldı";
         public static string Deleted = "Silme Yapıldı";
         public static string Updated = "Güncelleme Yapıldı";
+        public static string FailedRentalAddOrUpdate = "Belirtilen araç kiralanamaz";
     }
 }

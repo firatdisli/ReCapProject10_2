@@ -3,6 +3,7 @@ using Business.Constans;
 using Core.Utilities.Result;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using System.Collections.Generic;
 
 namespace Business.Concrete
@@ -15,11 +16,19 @@ namespace Business.Concrete
         {
             _rentalDal = rentalDal;
         }
-
+        
         public IResult Add(Rental rental)
         {
-            _rentalDal.Add(rental);
-            return new SuccessResult(Messages.Added);
+
+            //Araç kiraya verilip geri getirilmemişse kiraya verme
+
+            var result = _rentalDal.GetRentalDetails(r => r.CarId == rental.CarId && r.ReturnDate == null);
+            if (result.Count > 0)
+                return new ErrorResult(Messages.FailedRentalAddOrUpdate);
+      
+                _rentalDal.Add(rental);
+                return new SuccessResult(Messages.Added);
+           
         }
 
         public IResult Delete(Rental rental)
@@ -36,6 +45,11 @@ namespace Business.Concrete
         public IDataResult<List<Rental>> GetAll()
         {
             return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll());
+        }
+
+        public IDataResult<List<RentalDetailDto>> GetRentalDetails(int rentalId)
+        {
+            return new SuccessDataResult<List<RentalDetailDto>>(_rentalDal.GetRentalDetails(r => r.Id == rentalId));
         }
 
         public IResult Update(Rental rental)
