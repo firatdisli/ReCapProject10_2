@@ -4,7 +4,9 @@ using Core.Utilities.Result;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Business.Concrete
 {
@@ -57,5 +59,20 @@ namespace Business.Concrete
             _rentalDal.Update(rental);
             return new SuccessResult(Messages.Updated);
         }
+        public IResult CompleteRentalByCarId(int id)
+        {
+            var result = _rentalDal.GetAll(r => r.CarId == id);
+            var updatedRental = result.SingleOrDefault();
+
+            //To prevent to complete rental that is already completed.
+            if (updatedRental.ReturnDate != null)
+            {
+                return new ErrorResult(Messages.RentalAlreadyCompleted);
+            }
+            updatedRental.ReturnDate = DateTime.Now;
+            _rentalDal.Update(updatedRental);
+            return new SuccessResult(Messages.RentalCompleted);
+        }
+
     }
 }

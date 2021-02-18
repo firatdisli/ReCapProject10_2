@@ -22,5 +22,7 @@
         public static string Deleted = "Silme Yapıldı";
         public static string Updated = "Güncelleme Yapıldı";
         public static string FailedRentalAddOrUpdate = "Belirtilen araç kiralanamaz";
+        public static string RentalAlreadyCompleted = "Belirtilen araç Zaten teslim edilmiş";
+        public static string RentalCompleted = "Araç Teslim edildi";
     }
 }
