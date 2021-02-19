@@ -24,10 +24,12 @@ namespace Business.Concrete
 
             //Araç kiraya verilip geri getirilmemişse kiraya verme
 
-            var result = _rentalDal.GetRentalDetails(r => r.CarId == rental.CarId && r.ReturnDate == null);
-            if (result.Count > 0)
+            var carRentallist = _rentalDal.GetAll(r => r.CarId == rental.CarId );
+            foreach (var carRental in carRentallist)
+            {
+                if(carRental.ReturnDate==null)
                 return new ErrorResult(Messages.FailedRentalAddOrUpdate);
-      
+            }
                 _rentalDal.Add(rental);
                 return new SuccessResult(Messages.Added);
            
